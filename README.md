@@ -7,7 +7,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/johnMinelli/carla-gym/LICENSE)
 
-Carla-gym is an interface to instantiate Reinforcement Learning (RL) environments on top of the CARLA Autonomous Driving simulator. It allows the training of agents (single or multi), the use of predefined or custom scenarios for reproducibility and benchmarking, and extensive control and customization over the virtual world. New environments and scenarios can be easily configured through XML documents (OPENScenario-like) or JSON configurations.
+**Carla-gym** is an interface to instantiate Reinforcement Learning (RL) environments on top of the CARLA Autonomous Driving simulator. It allows the training of agents (single or multi), the use of predefined or custom scenarios for reproducibility and benchmarking, and extensive control and customization over the virtual world. New environments and scenarios can be easily configured through XML documents (OPENScenario-like) or JSON configurations.
 
 ## Installation
 ##### Prerequisites
