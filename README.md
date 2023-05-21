@@ -166,6 +166,7 @@ You can customize the environment by providing an XML or JSON configuration. Det
 
 #### Naming Convention
 For the naming convention, we refer to [MACAD-Gym](https://arxiv.org/abs/1911.04175). The currently provided scenarios were refactored from the same work to maintain consistency in line with the original effort in providing reproducibility and benchmarking scenarios. You can customize the configurations and eventually contribute with new configurations starting from provided XML [examples](/carla_gym/scenarios) and respecting the current naming convention. Here is an example (reported from the official [repo](https://github.com/praveen-palanisamy/macad-gym/)):
+
 ![MACAD-Gym Naming Conventions](docs/images/macad-gym-naming-conventions.png)
 
 ### Contributing
