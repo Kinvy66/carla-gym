@@ -24,14 +24,14 @@ with open("README.md") as f:
 # Replace relative path to images with GitHub URI
 github_uri_prefix = "https://raw.githubusercontent.com/johnMinelli/carla-gym/master/"
 rel_img_path = "docs/images/"
-long_description = long_description.replace("(" + rel_img_path, "(" + github_uri_prefix + rel_img_path)
+long_description = long_description.replace(rel_img_path, github_uri_prefix + rel_img_path)
 
 
 setup(
     name="carla-gym",
     version=get_version(),
     license="MIT",
-    description="Learning environments for Multi-Agent Connected Autonomous Driving (MACAD) with OpenAI Gym compatible interfaces",
+    description="Multi-agent reinforcement learning interface for CARLA Autonomous Driving simulator compatible with PettingZoo.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/johnMinelli/carla-gym",
