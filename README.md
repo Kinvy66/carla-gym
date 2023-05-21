@@ -16,10 +16,16 @@
 - **CARLA Autonomous Driving Simulator Server** installed locally. Otherwise, refer to the [Guide](#guide) section below.
 - `CARLA_SERVER` environment variable pointing to the CARLA executable.
 
-You can install the package in the Python virtual environment of your choice with the following command:
+##### Requirements
+- carla==0.9.13 (use the same version as the local server installed)
+- pettingzoo
+- pygame
+- networkx==2.6.3
+- opencv-python
+
+Python 3.7 and 3.8 are supported (the 'carla' package does not support higher versions). To install the package in the Python virtual environment of your choice, use the following command:
 
 `pip install carla-gym`
-
 
 ## Usage
 The package allows you to interact with the CARLA simulator as a PettingZoo environment. You can instantiate an environment as follows:

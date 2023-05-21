@@ -39,6 +39,15 @@ setup(
     setup_requires=["setuptools_scm"],
     include_package_data=True,
     package_data={"carla_gym": ["*.xml"]},
-    install_requires=["gym", "path", "carla>=0.9.3", "GPUtil", "pygame", "opencv-python", "networkx"],
+    install_requires=[
+        "gymnasium",
+        "pettingzoo",
+        "carla>=0.9.3",
+        "GPUtil",
+        "pygame",
+        "opencv-python",
+        "networkx==2.6.3",
+        "psutil",
+    ],
     extras_require={"test": ["tox", "pytest", "pytest-xdist", "tox"]},
 )

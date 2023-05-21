@@ -43,7 +43,6 @@ from carla_gym.core.controllers.pedestrian_manager import PedestrianManager
 from carla_gym.core.controllers.vehicle_manager import DISCRETE_ACTIONS, VehicleManager
 from gymnasium.spaces import Box, Dict, Discrete, Tuple
 from gymnasium.utils import EzPickle
-from path import Path
 from pettingzoo import AECEnv
 from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.env import ActionDict
@@ -215,7 +214,7 @@ class MultiActorCarlaEnv:
         self.reward_range = (-float("inf"), float("inf"))
 
         # Environment configuration variables
-        self.server_maps_path = Path(maps_path)
+        self.server_maps_path = maps_path
         self.verbose = verbose
         self.render_mode = render_mode
         self.discrete_action_space = discrete_action_space
@@ -382,7 +381,7 @@ class MultiActorCarlaEnv:
         log_file = os.path.join(LOG_DIR, "server_" + str(self._server_port) + ".log")
         logger.info(
             f"1. Port: {self._server_port}\n"
-            f"2. Map: {self.server_maps_path / self._scenario_config.town}\n"
+            f"2. Map: {os.path.join(self.server_maps_path, self._scenario_config.town)}\n"
             f"3. Binary: {SERVER_BINARY}"
         )
 
@@ -496,10 +495,12 @@ class MultiActorCarlaEnv:
         self._client.set_timeout(60.0)
         # load map using client api since 0.9.6+
         try:
-            self._client.load_world(self.server_maps_path / self._scenario_config.town)
+            self._client.load_world(os.path.join(self.server_maps_path, self._scenario_config.town))
             self.world = self._client.get_world()
         except Exception:
-            raise Exception(f"Error loading the world: {self.server_maps_path/self._scenario_config.town}")
+            raise Exception(
+                f"Error loading the world: {os.path.join(self.server_maps_path, self._scenario_config.town)}"
+            )
 
         world_settings = self.world.get_settings()
         # Synchronous_mode available with CARLA version>=0.9.6
@@ -816,7 +817,7 @@ class MultiActorCarlaEnv:
         random.seed(seed)
         self._load_scenario()
 
-        for retry in range(RETRIES_ON_ERROR):
+        for retry in range(RETRIES_ON_ERROR + 1):
             try:
                 if not self._server_process:
                     self._init_server()
@@ -826,7 +827,7 @@ class MultiActorCarlaEnv:
                 break
             except Exception as e:
                 print(f"Error during reset: {traceback.format_exc()}")
-                print(f"reset(): Retry #: {retry + 1}/{RETRIES_ON_ERROR}")
+                print(f"reset(): Execution try #: {retry + 1}/{RETRIES_ON_ERROR}")
                 self._clear_server_state()
                 if retry >= RETRIES_ON_ERROR:
                     raise e
