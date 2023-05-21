@@ -10,7 +10,7 @@ LOG_DIR = os.path.join(os.getcwd(), "logs")
 if not os.path.isdir(LOG_DIR):
     os.mkdir(LOG_DIR)
 
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 
 # Init and setup the root logger
 logging.basicConfig(filename=LOG_DIR + "/carla-gym.log", level=logging.DEBUG)
