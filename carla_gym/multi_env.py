@@ -46,6 +46,7 @@ from gymnasium.utils import EzPickle
 from pettingzoo import AECEnv
 from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.env import ActionDict
+from pettingzoo.utils.conversions import parallel_wrapper_fn
 
 # The following imports depend on these paths being in sys path
 sys.path.append("carla_gym/carla_api/PythonAPI")
@@ -138,10 +139,10 @@ Box(high=np.array([1.0, 1.0]), low=np.array([-1.0, -1.0]), shape=(2,), dtype=np.
 """
 
 
-def parallel_env(**kwargs):
-    """Instantiate a PettingoZoo environment with Parallel API implemented."""
-    env = MultiActorCarlaEnv(**kwargs)
-    return env
+# def parallel_env(**kwargs):
+#     """Instantiate a PettingoZoo environment with Parallel API implemented."""
+#     env = MultiActorCarlaEnv(**kwargs)
+#     return env
 
 
 def env(**kwargs):
@@ -151,6 +152,7 @@ def env(**kwargs):
     env = wrappers.OrderEnforcingWrapper(env)
     return env
 
+parallel_env = parallel_wrapper_fn(env)
 
 class MultiActorCarlaEnv:
     """Carla-Gym environment."""
@@ -166,8 +168,8 @@ class MultiActorCarlaEnv:
         fixed_delta_seconds: float = 0.05,
         render_width: int = 800,
         render_height: int = 600,
-        actor_render_width: int = 84,
-        actor_render_height: int = 84,
+        actor_render_width: int = 168,
+        actor_render_height: int = 168,
         discrete_action_space: bool = True,
         verbose: bool = False,
     ):
@@ -1283,6 +1285,7 @@ class MultiActorCarlaEnvPZ(AECEnv, EzPickle):
             del self.rewards[self.agent_selection]
             del self._cumulative_rewards[self.agent_selection]
             self.env._active_actors.discard(self.agent_selection)
+            self._deads_step_first()
             return
 
         self._actions[self.agent_selection] = action
