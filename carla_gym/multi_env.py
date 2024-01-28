@@ -1278,6 +1278,9 @@ class MultiActorCarlaEnvPZ(AECEnv, EzPickle):
             if action is not None:
                 raise ValueError("when an agent is dead, the only valid action is None")
 
+            # self.agent_selection = self.env.agents[]
+            next_index = (self.agents.index(self.agent_selection) + 1) % len(self.agents)
+            next_selection = self.agents[next_index]
             del self.infos[self.agent_selection]
             del self._actions[self.agent_selection]
             del self.env._terminations[self.agent_selection]
@@ -1285,8 +1288,26 @@ class MultiActorCarlaEnvPZ(AECEnv, EzPickle):
             del self.rewards[self.agent_selection]
             del self._cumulative_rewards[self.agent_selection]
             self.env._active_actors.discard(self.agent_selection)
-            self._deads_step_first()
+            deads_order = [
+                agent
+                for agent in self.agents
+                if (self.env._terminations[agent] or self.env._truncations[agent])
+            ]
+            if len(deads_order) > 0:
+                self.agent_selection = deads_order[0]
+            else:
+                if len(self.agents) > 0:
+                    self._agent_selector = agent_selector(self.env.agents)
+                    self.agent_selection = self._agent_selector.reset()
             return
+
+        # _deads_agent = [
+        #     agent
+        #     for agent in self.agents
+        #     if (self.env._terminations[agent] or self.env._truncations[agent])
+        # ]
+        # if len(_deads_agent) > 0 :
+        #     print("error")
 
         self._actions[self.agent_selection] = action
         if self._agent_selector.is_last():
